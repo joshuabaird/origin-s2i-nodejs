@@ -78,19 +78,25 @@ To replace [the default SCL-packaged `openshift/nodejs` image](https://hub.docke
 
 Building your own Builder images
 --------------------------------
+Install necessary tools
+ ```
+    $ sudo yum -y install python-setuptools
+ ```
 Clone a copy of this repo to fetch the build sources:
 
-    $ git clone https://github.com/ryanj/origin-s2i-nodejs.git
+    $ git clone https://github.com/christianh814/origin-s2i-nodejs
     $ cd origin-s2i-nodejs
 
 To build your own S2I Node.JS builder images from scratch, run:
 
     $ docker pull openshift/base-centos7
+    $ docker pull registry.access.redhat.com/rhscl/s2i-base-rhel7
     $ make build
 
 You can also build a specific release, or try building the alternate `ONBUILD` version of this base:
 
-    $ ONBUILD=true make VERSION=6.3.1
+    $ SKIP_SQUASH=1 make VERSION=6.9.4 OS=rhel7 NAMESPACE=openshift
+    $ SKIP_SQUASH=1 make VERSION=6.9.4 NAMESPACE=openshift
 
 The `ONBUILD` base images are available at https://hub.docker.com/r/ryanj/centos7-nodejs
 
