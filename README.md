@@ -79,8 +79,8 @@ To replace [the default SCL-packaged `openshift/nodejs` image](https://hub.docke
 Building your own Builder images
 --------------------------------
 Install necessary tools
- ```
-    $ sudo yum -y install python-setuptools
+```
+$ sudo yum -y install python-setuptools
  ```
 Clone a copy of this repo to fetch the build sources:
 
