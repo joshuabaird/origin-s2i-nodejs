@@ -7,7 +7,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 
 [follett-org]
 name=Follett Corporation - OLS (RHEL7)
-baseurl=http://yum.corp.follett.com/pulp/repos/follett/$releasever/$basearch/ols/os
+baseurl=http://yum.corp.follett.com/pulp/repos/follett/$releasever/$basearch/fss-ols/os
 enabled=1
 gpgcheck=0
 
