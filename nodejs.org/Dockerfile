@@ -11,7 +11,7 @@ EXPOSE 8080
 # See https://docs.npmjs.com/misc/scripts, and your repo's package.json
 # file for possible values of NPM_RUN
 ENV NPM_RUN=start \
-    NODE_VERSION=6.3.1 \
+    NODE_VERSION=6.9.4 \
     NPM_CONFIG_LOGLEVEL=info \
     NPM_CONFIG_PREFIX=$HOME/.npm-global \
     PATH=$HOME/node_modules/.bin/:$HOME/.npm-global/bin/:$PATH \
@@ -26,9 +26,10 @@ LABEL io.k8s.description="Platform for building and running Node.js applications
       io.openshift.tags="builder,nodejs,nodejs$NODE_VERSION" \
       com.redhat.deployments-dir="/opt/app-root/src"
 
+# Define custom yum repos 
 ADD os.repo /etc/yum.repos.d/
 
-# Download and install a binary from nodejs.org
+# Download and install nodejs from internal yum repos (mirrored from EPEL)
 # Add the gpg keys listed at https://github.com/nodejs/node
 RUN set -ex && \
   for key in \
@@ -43,8 +44,8 @@ RUN set -ex && \
   ; do \
     gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
   done && \
-  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
-  INSTALL_PKGS="bzip2 nss_wrapper nodejs" && \
+  # Install nodejs from internal follett-el7-ols-rpms yum repo
+  INSTALL_PKGS="bzip2 nss_wrapper nodejs-${NODE_VERSION}" && \
   yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
   rpm -V $INSTALL_PKGS && \
   yum clean all -y
